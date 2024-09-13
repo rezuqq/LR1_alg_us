@@ -8,14 +8,25 @@ int main() {
 	int max = 0;
 	int min = 99999;
 	int res = 0;
-	int mas[10];
+	int size;
+
+	printf("Write size of mass: ");
+	scanf_s("%d", &size);
+
+	int* mas = (int*)malloc(size * sizeof(int));
+
+	if (mas == NULL) {
+		printf("\nError selections memory\n");
+		return 1;
+	}
+
 	srand(time(NULL));
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < size; i++) {
 		mas[i] = rand() % 100;
 		printf("%d ", mas[i]);
 	}
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < size; i++) {
 		if (mas[i] > max) {
 			max = mas[i];
 		}
@@ -24,7 +35,7 @@ int main() {
 		}
 	}
 	res = max - min;
-	printf("\n%d ", res);
+	printf("\nDifferens between max and min: %d ", res);
 
 	getchar();
 	return 0;
