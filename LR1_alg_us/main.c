@@ -5,37 +5,57 @@
 #include "stdlib.h"
 
 int main() {
-	int max = 0;
-	int min = 99999;
-	int res = 0;
-	int size;
+	int cols, rows;
 
-	printf("Write size of mass: ");
-	scanf_s("%d", &size);
+	printf("Write number of rows: ");
+	scanf_s("%d", &rows);
 
-	int* mas = (int*)malloc(size * sizeof(int));
+	printf("\nWrite number of cols: ");
+	scanf_s("%d", &cols);
 
+	int** mas = (int**)malloc(rows * sizeof(int *));
+	for (int i = 0; i < rows; i++){
+		mas[i] = (int*)malloc(cols * sizeof(int));
+	}
 	if (mas == NULL) {
 		printf("\nError selections memory\n");
 		return 1;
 	}
 
 	srand(time(NULL));
-	for (int i = 0; i < size; i++) {
-		mas[i] = rand() % 100;
-		printf("%d ", mas[i]);
+
+	printf("\nMatrix\n");
+
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			mas[i][j] = rand() % 100;
+			printf("%d ", mas[i][j]);
+		}
+		printf("\n");
 	}
 
-	for (int i = 0; i < size; i++) {
-		if (mas[i] > max) {
-			max = mas[i];
+	printf("\nSumm of rows: ");
+	for (int i = 0; i < rows; i++) {
+		int sum_row = 0;
+		for (int j = 0; j < cols; j++) {
+			sum_row += mas[i][j];
 		}
-		if (mas[i] < min) {
-			min = mas[i];
-		}
+		printf("\nRow %d: %d", i + 1, sum_row);
 	}
-	res = max - min;
-	printf("\nDifferens between max and min: %d ", res);
+
+	printf("\n");
+	printf("\nSumm of cols: ");
+	for (int j = 0; j < cols; j++) {
+		int sum_col = 0;
+		for (int i = 0; i < rows; i++) {
+			sum_col += mas[i][j];
+		}
+		printf("\nCol %d: %d", j + 1, sum_col);
+	}
+
+	for (int i = 0; i < rows; i++) {
+		free(mas[i]);
+	}
 
 	free(mas);
 
