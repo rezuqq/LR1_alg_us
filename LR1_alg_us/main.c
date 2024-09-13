@@ -37,6 +37,8 @@ int main() {
 	res = max - min;
 	printf("\nDifferens between max and min: %d ", res);
 
+	free(mas);
+
 	getchar();
 	return 0;
 }
