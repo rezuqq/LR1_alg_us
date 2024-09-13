@@ -1,64 +1,73 @@
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "time.h"
 #include "conio.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "locale.h"
 
-int main() {
-	int cols, rows;
+int main(void)
+{
+	setlocale(LC_ALL, "Rus");
+	setvbuf(stdin, NULL, _IONBF, 0);
+	setvbuf(stdout, NULL, _IONBF, 0);
+	int i;
+    struct student {
+        char famil[20];
+        char name[20], facult[20];
+        int Nomzach;
+    } stud[3];
 
-	printf("Write number of rows: ");
-	scanf_s("%d", &rows);
 
-	printf("\nWrite number of cols: ");
-	scanf_s("%d", &cols);
+    for (i = 0; i < 3; i++)
+    {
+        printf("Введите фамилию студента\n"); scanf("%20s", stud[i].famil);
+    }
+    for (i = 0; i < 3; i++)
+    {
+        printf("Введите имя студента %s\n", stud[i].famil); scanf("%20s", stud[i].name);
+    }
+    for (i = 0; i < 3; i++)
+    {
+        printf("Введите название факультета студента %s %s\n", stud[i].famil, stud[i].name); scanf("%20s", stud[i].facult);
+    }
+    for (i = 0; i < 3; i++)
+    {
+        printf("Введите номер зачётной книжки студента %s %s\n", stud[i].famil, stud[i].name); scanf("%d", &stud[i].Nomzach);
+    }
 
-	int** mas = (int**)malloc(rows * sizeof(int *));
-	for (int i = 0; i < rows; i++){
-		mas[i] = (int*)malloc(cols * sizeof(int));
-	}
-	if (mas == NULL) {
-		printf("\nError selections memory\n");
-		return 1;
-	}
+    for (i = 0; i < 3; i++)
+    {
+        printf("Cтудент %s %s обучается на факультете %s, номер зачётной книжки %d \n", stud[i].famil, stud[i].name,
+            stud[i].facult, stud[i].Nomzach);
+    }
 
-	srand(time(NULL));
+    char search_famil[20], search_name[20], search_facult[20];
 
-	printf("\nMatrix\n");
+    printf("\nВведите фамилию студента для поиска: "); scanf("%20s", search_famil);
 
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			mas[i][j] = rand() % 100;
-			printf("%d ", mas[i][j]);
-		}
-		printf("\n");
-	}
+    printf("Введите имя студента для поиска: ");
+    scanf("%20s", search_name);
 
-	printf("\nSumm of rows: ");
-	for (int i = 0; i < rows; i++) {
-		int sum_row = 0;
-		for (int j = 0; j < cols; j++) {
-			sum_row += mas[i][j];
-		}
-		printf("\nRow %d: %d", i + 1, sum_row);
-	}
+    printf("Введите факультет студента для поиска: ");
+    scanf("%20s", search_facult);
 
-	printf("\n");
-	printf("\nSumm of cols: ");
-	for (int j = 0; j < cols; j++) {
-		int sum_col = 0;
-		for (int i = 0; i < rows; i++) {
-			sum_col += mas[i][j];
-		}
-		printf("\nCol %d: %d", j + 1, sum_col);
-	}
+    int found = 0;
 
-	for (int i = 0; i < rows; i++) {
-		free(mas[i]);
-	}
+    for (i = 0; i < 3; i++) {
+        if (strcmp(stud[i].famil, search_famil) == 0 &&
+            strcmp(stud[i].name, search_name) == 0 &&
+            strcmp(stud[i].facult, search_facult) == 0) {
 
-	free(mas);
+            printf("\nНайден студент: %s %s, факультет: %s, номер зачётной книжки: %d\n",
+                stud[i].famil, stud[i].name, stud[i].facult, stud[i].Nomzach);
+            found = 1;
+            break;
+        }
+    }
 
-	getchar();
-	return 0;
+    if (!found) {
+        printf("\nСтудент с указанными параметрами не найден.\n");
+    }
+
+    return 0;
 }
