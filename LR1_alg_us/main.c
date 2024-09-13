@@ -8,7 +8,13 @@ int main() {
 	int max = 0;
 	int min = 99999;
 	int res = 0;
-	int mas[10] = { 1, 3, 5, 7, 10, 33, 54, 8, 9, 11 };
+	int mas[10];
+	srand(time(NULL));
+	for (int i = 0; i < 10; i++) {
+		mas[i] = rand() % 100;
+		printf("%d ", mas[i]);
+	}
+
 	for (int i = 0; i < 10; i++) {
 		if (mas[i] > max) {
 			max = mas[i];
@@ -18,8 +24,7 @@ int main() {
 		}
 	}
 	res = max - min;
-	printf("%d %d \n", min, max);
-	printf("%d ", res);
+	printf("\n%d ", res);
 
 	getchar();
 	return 0;
