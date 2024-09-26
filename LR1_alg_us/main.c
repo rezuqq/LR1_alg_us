@@ -11,6 +11,7 @@ int main(void)
     setvbuf(stdin, NULL, _IONBF, 0);
     setvbuf(stdout, NULL, _IONBF, 0);
     char tmp_lab = "a";
+    int b = 0;
     int i = 0;
     struct student {
         int num;
